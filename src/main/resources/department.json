@@ -1,0 +1,27 @@
+[
+  {
+    "departmentName": "EC",
+    "departmentCode": "EC-02",
+    "departmentAddress": "Bangalore"
+  },
+  {
+    "departmentName": "CS",
+    "departmentCode": "CS-01",
+    "departmentAddress": "Bournemouth"
+  },
+  {
+    "departmentName": "EEE",
+    "departmentCode": "EEE-01",
+    "departmentAddress": "Kochi"
+  },
+  {
+    "departmentName": "ME",
+    "departmentCode": "ME-04",
+    "departmentAddress": "Kothamangalam"
+  },
+  {
+    "departmentName": "ME",
+    "departmentCode": "ME-04",
+    "departmentAddress": "Kothamangalam"
+  }
+]
