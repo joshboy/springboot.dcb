@@ -9,4 +9,11 @@ public interface IDepartmentService {
     Department saveDepartment(Department department);
     List<Department> fetchDepartmentList();
     Department fetchDepartmentById(BigInteger id);
+
+    void deleteDepartmentById(BigInteger id);
+
+    Department updateDepartment(BigInteger id, Department department);
+
+    List<Department> fetchDepartmentByName(String name);
+
 }
