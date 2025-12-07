@@ -1,12 +1,11 @@
 package com.jjk.springboot.dcb.controller;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jjk.springboot.dcb.entity.Department;
 import com.jjk.springboot.dcb.service.IDepartmentService;
-import jakarta.annotation.PostConstruct;
+import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Example;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,25 +14,26 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
 import java.math.BigInteger;
 import java.util.List;
 
 @RestController
+@Slf4j
 public class DepartmentController {
 
     @Autowired
     private IDepartmentService departmentService;
 
     @PostMapping("/departments")
-    public Department saveDepartment(@RequestBody Department department) {
+    public Department saveDepartment(@Valid @RequestBody Department department) {
 
         return departmentService.saveDepartment(department);
     }
 
     @GetMapping("/departments")
     public List<Department> fetchDepartments() {
-        return  departmentService.fetchDepartmentList();
+        log.info("fetchDepartments {}");
+        return  departmentService.fetchDepartmentList(Example.of(Department.builder().build()));
     }
 
     @GetMapping("/departments/{id}")
@@ -44,7 +44,6 @@ public class DepartmentController {
     @DeleteMapping("/departments/{id}")
     public String deleteDepartmentById(@PathVariable("id") BigInteger id) {
         departmentService.deleteDepartmentById(id);
-
         return "Department deleted successfully";
     }
 
@@ -59,7 +58,12 @@ public class DepartmentController {
         return departmentService.fetchDepartmentByName(name);
     }
 
+    @GetMapping("departments/code/{code}")
+    public List<Department> fetchDepartmentByCode(@PathVariable("code") String code) {
+        return departmentService.fetchDepartmentByCode(code);
+    }
 
+/*
     @PostConstruct
     public void init() {
         try {
@@ -70,9 +74,9 @@ public class DepartmentController {
 
             List<Department> department = new ObjectMapper().readValue(new ClassPathResource("department.json").getInputStream(), new TypeReference<List<Department>>() {
             });
-            department.stream().forEach(departmentService::saveDepartment);
+            department.forEach(departmentService::saveDepartment);
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }
